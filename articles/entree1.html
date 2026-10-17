@@ -13,122 +13,136 @@
 
 <body>
 
-  <header>
-    <h1>Journal de développement</h1>
+      <header class="site-header">
+        <div class="container">
+            <a class="logo" href="index.html">
+                Blogue | Lore Weaver
+            </a>
 
-    <nav>
-      <a href="../index.html">Accueil du blogue</a>
-    </nav>
-  </header>
+            <nav aria-label="Navigation principale">
+                <a href="index.html">Accueil</a>
+                <a href="articles.html">Articles</a>
+                <a href="https://github.com/AliciaGagne"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
 
   <main class="container">
-    <article>
+    <section class="hero">
+      <h2>Journal de développement</h2>
 
-      <h2>Entrée 1 : Les débuts de Lore Weaver</h2>
+      <article>
+  
+        <h2>Entrée 1 : Les débuts de Lore Weaver</h2>
+  
+        <p>
+          <time datetime="2026-10-16">
+            16 octobre 2026
+          </time>
+        </p>
+  
+        <h3>Présentation du projet</h3>
+  
+        <p>
+          Pour mon projet de session dans le cadre du cours INF 1410, j'ai choisi de développer une application web de création
+          et de gestion d'univers fictifs, appelée Lore Weaver.
+        </p>
+  
+        <p>
+          Cette application permettra aux créateurs d'organiser leurs personnages, leurs lieux, leurs factions et les événements qui 
+          composent leurs univers imaginaires.
+        </p>
+  
+        <h3>Les utilisateurs et le problème à résoudre</h3>
+  
+        <p>
+          L'application s'adresse principalement aux écrivains, aux créateurs de jeux vidéo, aux maîtres de jeu de rôle et aux passionnés
+          de création d'univers (worldbuilding).
+        </p>
+  
+        <p>
+          Lorsque les univers deviennent complexes, leurs créateurs doivent gérer une grande quantité d'informations réparties entre
+          plusieurs documents. Il devient alors difficile de retrouver ce qui a été créé et de maintenir la cohérence du monde.
+        </p>
+  
+        <p>
+          Mon objectif est de centraliser ces informations dans une seule application afin de simplifier leur organisation.
+        </p>
+  
+        <h3>Mes premiers choix techniques</h3>
+  
+        <p>
+          Pour développer l'interface, j'ai choisi HTML, CSS et JavaScript.
+        </p>
+  
+        <p>
+          Pour le serveur, j'ai choisi Node.js avec Express. Cette combinaison me permettra d'utiliser JavaScript autant du 
+          côté client que du côté serveur.
+        </p>
+  
+        <p>
+          J'utilise GitHub pour gérer le code source et GitHub Actions pour automatiser les tests. Mon blogue technique est publié
+          séparément avec GitHub Pages.
+        </p>
+  
+        <p>
+          Pour l'hébergement de l'application, Render est une option que je prévois d'évaluer.
+        </p>
+  
+        <h3>Les alternatives considérées</h3>
+  
+        <p>
+          J'ai envisagé d'utiliser le language Python pour la conception de l'application Web. Mon choix s'est porté sur 
+          JavaScript, car il s'agit d'un langage reconnu pour son utilisation dans le développement Web et avec lequel 
+          je suis plus familière.
+        </p>
+  
+        <p>
+          J'envisage PostgreSQL ou MySQL comme bases de données relationnelles pour stocker les utilisateurs, les univers et leurs 
+          différents éléments. Néanmoins, mon choix n'a pas encore été fait. Puisque je ne suis pas familière avec les divers bases
+          de données disponibles, leurs avantages et leurs limitations, je vais devoir effectuer de la recherche additionnelle avant
+          d'effectuer ma décision finale pour Lore Weaver.
+        </p>
+  
+        <h3>Les incertitudes et défis</h3>
+  
+        <p>
+          L'un de mes principaux défis sera la conception de la base de données. Les personnages, les lieux, les factions
+          et les événements devront pouvoir entretenir plusieurs relations.
+        </p>
+  
+        <p>
+          Je devrai également apprendre à gérer l'authentification, protéger les données privées des utilisateurs et concevoir
+          une interface facile à utiliser. 
+        </p>
+  
+        <p>
+          Enfin, je devrai déterminer quelles fonctionnalités développer en priorité afin de respecter les échéances du cours. 
+          Mon but premier est d'atteindre le produit minimum viable afin d'éviter d'effectuer un projet de trop grande envergure.
+        </p>
+  
+        <p>
+          Il s'agit de la première fois que j'effectue un projet sur une longue durée et que j'effectue l'ensemble des étapes de la
+          conception dans le cadre d'un cours universitaire. Il y a donc des aspects de gestion de projet qui me seront moins familiers,
+          mais que je devrai maîtriser afin de mener à terme 
+        </p>
+  
+        <h3>Les prochaines étapes</h3>
+  
+        <p>
+          Je prévois de commencer par la mise en place du serveur d'hébergement de l'application Web et de la base de données.
+        </p>
+  
+        <p>
+          Je développerai ensuite la création de comptes et la gestion des univers fictifs.
+        </p>
 
-      <p>
-        <time datetime="2026-10-16">
-          16 octobre 2026
-        </time>
-      </p>
-
-      <h3>Présentation du projet</h3>
-
-      <p>
-        Pour mon projet de session dans le cadre du cours INF 1410, j'ai choisi de développer une application web de création
-        et de gestion d'univers fictifs, appelée Lore Weaver.
-      </p>
-
-      <p>
-        Cette application permettra aux créateurs d'organiser leurs personnages, leurs lieux, leurs factions et les événements qui 
-        composent leurs univers imaginaires.
-      </p>
-
-      <h3>Les utilisateurs et le problème à résoudre</h3>
-
-      <p>
-        L'application s'adresse principalement aux écrivains, aux créateurs de jeux vidéo, aux maîtres de jeu de rôle et aux passionnés
-        de création d'univers (worldbuilding).
-      </p>
-
-      <p>
-        Lorsque les univers deviennent complexes, leurs créateurs doivent gérer une grande quantité d'informations réparties entre
-        plusieurs documents. Il devient alors difficile de retrouver ce qui a été créé et de maintenir la cohérence du monde.
-      </p>
-
-      <p>
-        Mon objectif est de centraliser ces informations dans une seule application afin de simplifier leur organisation.
-      </p>
-
-      <h3>Mes premiers choix techniques</h3>
-
-      <p>
-        Pour développer l'interface, j'ai choisi HTML, CSS et JavaScript.
-      </p>
-
-      <p>
-        Pour le serveur, j'ai choisi Node.js avec Express. Cette combinaison me permettra d'utiliser JavaScript autant du 
-        côté client que du côté serveur.
-      </p>
-
-      <p>
-        J'utilise GitHub pour gérer le code source et GitHub Actions pour automatiser les tests. Mon blogue technique est publié
-        séparément avec GitHub Pages.
-      </p>
-
-      <p>
-        Pour l'hébergement de l'application, Render est une option que je prévois d'évaluer.
-      </p>
-
-      <h3>Les alternatives considérées</h3>
-
-      <p>
-        J'ai envisagé d'utiliser le language Python pour la conception de l'application Web. Mon choix s'est porté sur 
-        JavaScript, car il s'agit d'un langage reconnu pour son utilisation dans le développement Web et avec lequel 
-        je suis plus familière.
-      </p>
-
-      <p>
-        J'envisage PostgreSQL ou MySQL comme bases de données relationnelles pour stocker les utilisateurs, les univers et leurs 
-        différents éléments. Néanmoins, mon choix n'a pas encore été fait. Puisque je ne suis pas familière avec les divers bases
-        de données disponibles, leurs avantages et leurs limitations, je vais devoir effectuer de la recherche additionnelle avant
-        d'effectuer ma décision finale pour Lore Weaver.
-      </p>
-
-      <h3>Les incertitudes et défis</h3>
-
-      <p>
-        L'un de mes principaux défis sera la conception de la base de données. Les personnages, les lieux, les factions
-        et les événements devront pouvoir entretenir plusieurs relations.
-      </p>
-
-      <p>
-        Je devrai également apprendre à gérer l'authentification, protéger les données privées des utilisateurs et concevoir
-        une interface facile à utiliser. 
-      </p>
-
-      <p>
-        Enfin, je devrai déterminer quelles fonctionnalités développer en priorité afin de respecter les échéances du cours. 
-        Mon but premier est d'atteindre le produit minimum viable afin d'éviter d'effectuer un projet de trop grande envergure.
-      </p>
-
-      <p>
-        Il s'agit de la première fois que j'effectue un projet sur une longue durée et que j'effectue l'ensemble des étapes de la
-        conception dans le cadre d'un cours universitaire. Il y a donc des aspects de gestion de projet qui me seront moins familiers,
-        mais que je devrai maîtriser afin de mener à terme 
-      </p>
-
-      <h3>Les prochaines étapes</h3>
-
-      <p>
-        Je prévois de commencer par la mise en place du serveur d'hébergement de l'application Web et de la base de données.
-      </p>
-
-      <p>
-        Je développerai ensuite la création de comptes et la gestion des univers fictifs.
-      </p>
-
-    </article>
+      </article>
+    </section>
   </main>
 
   <footer>

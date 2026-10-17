@@ -94,6 +94,12 @@ p {
   color: var(--muted);
 }
 
+footer {
+  width: min(100% - 20px, 900px);
+  margin: 0 auto;
+}
+}
+
 /* Sections */
 
 .about,

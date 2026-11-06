@@ -216,15 +216,15 @@ main > article p {
   margin-bottom: 20px;
 }
 
-main article a {
+.article a {
   color: #d4af71; 
 }
 
-main article a:hover {
+.article a:hover {
   color: #eedab7;
 }
 
-main article i {
+.article i {
   color: #eedab7;
   font-style: italic;
 }

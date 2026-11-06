@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Entrée 2 - Lore Weaver</title>
+
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+      <header class="site-header">
+        <div class="container">
+            <a class="logo" href="https://aliciagagne.github.io/LoreWeaver-Blog/index.html">
+                Blogue | Lore Weaver
+            </a>
+
+            <nav aria-label="Navigation principale">
+                <a href="https://aliciagagne.github.io/LoreWeaver-Blog/index.html">Accueil</a>
+                <a href="https://aliciagagne.github.io/LoreWeaver-Blog/articles.html">Articles</a>
+                <a href="https://github.com/AliciaGagne"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">JOURNAL DE DEVELOPPEMENT</p>
+      <article>
+        <br/>
+        <h2 style="color: var(--text)">Entrée 2 : Mise en place d'Express et premiers tests du serveur</h2>
+  
+        <p>
+          <time datetime="2026-10-16">
+            19 au 22 octobre 2026
+          </time>
+        </p>
+  
+        <h3>Mise en place du serveur Express — 19 octobre 2026</h3>
+  
+        <p>
+          Après avoir défini les premières bases de Lore Weaver, j'ai commencé à travailler sur la mise en place du serveur de mon 
+          application web. J'ai choisi d'utiliser Node.js avec le framework Express afin de développer la partie backend de mon 
+          application en JavaScript.
+        </p>
+  
+        <p>
+          Pour cette étape, je me suis notamment appuyée sur le site <a href="https://www.w3schools.com/nodejs/nodejs_express.asp">
+          W3Schools</a> afin de comprendre comment installer Express, configurer les fichiers nécessaires et organiser les premières
+          composantes du serveur.
+        </p>
+
+        <p>
+          J'ai commencé par installer Express dans mon environnement de développement Visual Studio Code, à l'aide de la commande 
+          suivante : </br>
+          <i>npm install express</i>
+        </p>
+
+        <p>
+          Cette installation a permis d'ajouter Express aux dépendances du projet, qui sont déclarées dans le fichier 
+          <i>package.json</i>.
+        </p>
+
+        <p>
+          J'ai ensuite travaillé sur la configuration des fichiers <i>app.js</i> et <i>server.js</i>. Le premier sert à configurer
+          l'application Express et ses routes, tandis que le second permet de démarrer le serveur.
+        </p>
+
+        <p>
+          Cette séparation devrait également faciliter la réalisation des tests automatisés, puisque l'application Express peut être
+          importée sans démarrer automatiquement le serveur.
+        </p>
+  
+        <h3>Création de la première page d'accueil — 22 octobre 2026</h3>
+  
+        <p>
+          Le 22 octobre, j'ai poursuivi le développement en créant une première page d'accueil pour Lore Weaver.
+        </p>
+  
+        <p>
+          Cette page utilise HTML pour sa structure, CSS pour son apparence et JavaScript pour les interactions. Les fichiers de 
+          l'interface sont placés dans le dossier <i>public</i> de mon projet. J'ai configuré Express pour rendre ces fichiers 
+          accessibles depuis le navigateur.
+        </p>
+  
+        <p>
+        J'ai ensuite pu démarrer mon application localement et accéder à ma page d'accueil à l'adresse suivante : </br>
+        <i>http://localhost:3000</i>
+        </p>
+
+        <p>
+          Le bon fonctionnement de cette adresse m'a permis de confirmer que mon serveur Express était capable de servir les fichiers de
+          mon application web.
+        </p>
+
+        <p>
+          Il s'agit d'une première étape importante, même si l'application ne dispose pas encore de toutes les fonctionnalités envisagées,
+          notamment l'authentification et la base de données relationnelle.
+        </p>
+  
+        <h3>Tests automatisés et problème avec GitHub Actions</h3>
+  
+        <p>
+          J'ai également poursuivi la mise en place des tests automatisés de Lore Weaver. J'utilise le module de tests intégré à Node.js
+          afin de vérifier le comportement de certaines fonctionnalités.
+        </p>
+  
+        <p>
+          En plus des tests concernant la création d'univers fictifs, j'ai ajouté des tests permettant de vérifier le fonctionnement du
+          serveur Express, notamment l'accessibilité de la page d'accueil.
+        </p>
+  
+        <p>
+          Lorsque j'exécutais les tests localement dans Visual Studio Code avec la commande npm test, ils fonctionnaient correctement.
+        </p>
+  
+        <p>
+          Cependant, les tests échouaient lors de leur exécution automatique dans GitHub Actions. Le journal d'exécution indiquait 
+          notamment l'erreur suivante : </br>
+          <i>Error [ERR_MODULE_NOT_FOUND]:</br>
+          Cannot find package 'express' imported from</br>
+          /home/runner/work/LoreWeaver/LoreWeaver/app.js</i>
+        </p>
+
+        <p>
+          L'échec concernait le fichier app.test.js, alors que les tests liés à la création d'univers fonctionnaient. Après avoir examiné
+          le message d'erreur, j'ai compris que le problème provenait de l'environnement utilisé par GitHub Actions.
+        </p>
+
+        <p>
+          Sur mon ordinateur, Express avait été installé localement. Cependant, GitHub Actions utilise son propre environnement pour 
+          exécuter les tests et ne possède pas automatiquement les dépendances installées sur mon ordinateur. Il était donc nécessaire 
+          de prévoir leur installation dans la pipeline d'intégration continue, avant de lancer les tests.
+        </p>
+
+        <p>
+          J'ai modifié le fichier <i>.github/workflows/ci.yml</i> afin d'ajouter l'étape suivante : </br>
+          <i>- name: Installer les dependances
+          run: npm ci</i>
+        </p>
+
+        <p>
+          La commande <i>npm ci</i> permet d'installer les dépendances du projet à partir des <i>fichiers package.json</i> et 
+          <i>package-lock.json</i>. En ajoutant cette étape avant l'exécution de <i>npm test</i>, GitHub Actions peut installer Express
+          et les autres dépendances nécessaires.
+        </p>
+
+        <p>
+          Après avoir effectué cette correction, j'ai exécuté de nouveau la pipeline et les tests ont réussi.
+        </p>
+
+        <p>
+          Cette difficulté m'a permis de mieux comprendre la différence entre mon environnement de développement local et celui utilisé 
+          par un service d'intégration continue tel que GitHub.
+        </p>
+
+        <p>
+          J'ai également compris pourquoi il est important de conserver les fichiers <i>package.json</i> et <i>package-lock.json</i> dans
+          le dépôt GitHub, même si le dossier <i>node_modules</i> n'est pas envoyé sur la plateforme.
+        </p>
+  
+        <h3>Décision architecturale : utilisation de Node.js et Express</h3>
+  
+        <p>
+          À cette étape du projet, j'ai également décidé de documenter officiellement mon choix d'utiliser Node.js et Express dans un
+          Architecture Decision Record (ADR).
+        </p>
+  
+        <p>
+          Cette décision repose principalement sur ma volonté d'utiliser JavaScript pour les différentes composantes de mon application. 
+          Node.js me permet d'exécuter du JavaScript côté serveur, tandis qu'Express simplifie la gestion des requêtes HTTP et des 
+          routes.
+        </p>
+
+        <p>
+          J'ai aussi considéré Python avec Django, qui propose davantage de fonctionnalités intégrées. Cependant, j'ai préféré conserver
+          JavaScript comme langage principal afin de limiter le nombre de nouvelles technologies à apprendre durant ce projet.
+        </p>
+
+        <p>
+          Le choix d'Express comporte également certains inconvénients, notamment le fait que je devrai intégrer moi-même des solutions
+          pour l'authentification et les interactions avec la base de données.
+        </p>
+
+        <p>
+          Cette décision est documentée dans le fichier <i>[NOM]</i> de mon dépôt GitHub.
+        </p>
+
+        <h3>Ce que j'ai appris</h3>
+
+        <p>
+          Ces premières étapes de développement m'ont permis de mieux comprendre plusieurs concepts. Tout d'abord, j'ai appris comment un
+          serveur Express peut rendre des pages HTML, CSS et JavaScript accessibles depuis un navigateur.
+        </p>
+
+        <p>
+          J'ai également commencé à mieux comprendre le rôle des dépendances npm et l'importance du fichier <i>package.json</i>.
+        </p>
+
+        <p>
+          La difficulté rencontrée avec GitHub Actions m'a montré qu'un programme fonctionnant sur mon ordinateur ne fonctionnera pas
+          nécessairement dans un autre environnement si celui-ci n'est pas correctement configuré.
+        </p>
+
+        <p>
+          Enfin, l'utilisation des tests automatisés me semble particulièrement utile pour la suite du projet, puisqu'elle permettra de
+          vérifier que les fonctionnalités existantes continuent de fonctionner à mesure que j'en ajouterai de nouvelles.
+        </p>
+
+        <h3>Les prochaines étapes</h3>
+
+        <p>
+          Maintenant que le serveur Express et les tests automatisés fonctionnent, je souhaite poursuivre le développement des
+          fonctionnalités principales de Lore Weaver.
+        </p>
+
+        <p>
+          Je devrai d'abord sélectionner un système de gestion de base de données relationnelle, notamment entre PostgreSQL et MySQL,
+          puis concevoir les tables nécessaires pour les utilisateurs et les univers. Je prévois commencer par tenter une utilisation 
+          de PostgreSQL. Selon mes recherches, cet outil a les fonctionnalités nécessaires à mes besoins, le facteur qui décidera si je 
+          continuerai avec PostgreSQL sera sa facilité d'utilisation.
+        </p>
+
+        <p>
+          Je compte ensuite développer le système de création de comptes, l'authentification et la gestion des univers fictifs.
+        </p>
+
+        <p>
+          L'objectif reste de développer progressivement une première version fonctionnelle de l'application avant d'ajouter les 
+          fonctionnalités plus complexes, comme les factions, les événements et les relations entre les différents éléments d'un univers.
+        </p>
+
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>Lore Weaver - Blogue de développement</p>
+  </footer>
+
+</body>
+</html>

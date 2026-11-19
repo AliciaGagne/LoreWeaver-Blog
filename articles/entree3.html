@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Entrée 3 - Lore Weaver</title>
+
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+      <header class="site-header">
+        <div class="container">
+            <a class="logo" href="https://aliciagagne.github.io/LoreWeaver-Blog/index.html">
+                Blogue | Lore Weaver
+            </a>
+
+            <nav aria-label="Navigation principale">
+                <a href="https://aliciagagne.github.io/LoreWeaver-Blog/index.html">Accueil</a>
+                <a href="https://aliciagagne.github.io/LoreWeaver-Blog/articles.html">Articles</a>
+                <a href="https://github.com/AliciaGagne"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">JOURNAL DE DEVELOPPEMENT</p>
+      <article>
+        <br/>
+        <h2 style="color: var(--text)">Entrée 2 : Mise en place de PostgreSQL et conception du schéma relationnel</h2>
+  
+        <p>
+          <time datetime="2026-11-18">
+            18 novembre 2026
+          </time>
+        </p>
+
+        <p>
+          Dans cette étape du développement de Lore Weaver, j'ai conçu le schéma relationnel de ma base de données, intégré PostgreSQL à
+          mon application Node.js et Express, et amélioré mes tests automatisés. Cette étape m'a permis de mieux comprendre l'organisation
+          d'une application web, mais également de constater l'importance de vérifier régulièrement mon code et de conserver un regard
+          critique sur les solutions proposées par l'intelligence artificielle.
+        </p>
+  
+        <h3>Décision architecturale : utilisation de PostgreSQL</h3>
+  
+        <p>
+          Comme expliqué lors de ma deuxième entrée dans le <a href="https://aliciagagne.github.io/LoreWeaver-Blog/articles/entree2.html">
+          blogue</a> et dans mon premier <a href="https://github.com/AliciaGagne/LoreWeaver/blob/main/doc/adr/001-choix-express.md">ADR</a>
+          , j’ai choisi d’utiliser Node.js et Express pour mon application web.
+        </p>
+  
+        <p>
+          J'ai également choisi d'utiliser <a href="https://github.com/AliciaGagne/LoreWeaver/blob/main/doc/adr/002-choix-postgresql.md">
+          PostgreSQL</a> comme système de gestion de base de données relationnelle. Ce choix correspond aux besoins de Lore Weaver, puisque
+          les utilisateurs pourront créer plusieurs univers contenant des personnages, des lieux, des factions et des événements. Ces
+          éléments ne sont pas indépendants : ils doivent pouvoir être associés entre eux, parfois de plusieurs façons.
+        </p>
+
+        <p>
+          J'ai privilégié PostgreSQL plutôt que MySQL, car j'avais une légère expérience avec MySQL et je souhaitais développer des
+          connaissances en utilisant un nouvel outil pour ce projet. 
+        </p>
+
+        <p>
+          Cette décision a aussi influencé l'organisation de mon application. Plutôt que de permettre au site web de communiquer 
+          directement avec la base de données, j'utilise Express comme intermédiaire. J'ai créé un fichier <i>src/config/database.js</i> 
+          qui utilise la bibliothèque pg et un pool de connexions pour communiquer avec PostgreSQL. Les paramètres de connexion sont
+          conservés dans des variables d'environnement afin de ne pas inscrire directement les informations sensibles dans le code.
+        </p>
+  
+        <h3>Conception et compréhension du schéma de données</h3>
+  
+        <p>
+          J'ai élaboré le <a href="https://github.com/AliciaGagne/LoreWeaver/blob/main/doc/schema-de-donn%C3%A9es.md">schéma</a> de ma
+          base de données en réfléchissant aux différents éléments que les utilisateurs pourront créer dans Lore Weaver. J'ai retenu les 
+          tables principales <i>UTILISATEUR</i>, <i>UNIVERS</i>, <i>PERSONNAGE</i>, <i>LIEU</i>, <i>FACTION</i> et <i>EVENEMENT</i>, ainsi
+          que des tables permettant de représenter les relations entre certains de ces éléments.
+        </p>
+  
+        <p>
+          La conception du schéma m'a amené à réfléchir aux cardinalités. Par exemple, un utilisateur peut posséder plusieurs univers,
+          alors qu'un personnage appartient à un univers précis. J'ai également compris pourquoi certaines relations nécessitent une table
+          d'association. Un personnage peut appartenir à plusieurs factions et participer à plusieurs événements, tandis qu'une faction ou
+          un événement peut regrouper plusieurs personnages.
+        </p>
+  
+        <p>
+          Cette réflexion m'a permis de mieux comprendre la différence entre les entités et les liens qui les unissent. Elle m'a aussi fait
+          réaliser qu'une clé étrangère ne doit pas être ajoutée simplement parce que deux éléments semblent liés. Il faut d'abord
+          déterminer la nature de leur relation.
+        </p>
+
+        <p>
+          Par exemple, je me suis questionnée sur la nécessité d’une table associant les personnages aux événements, car je souhaitais
+          éviter de complexifier inutilement ma base de données. Si je prends par exemple un événement tel que la bataille contre Thanos
+          sur la planète Titan dans le film Avengers: Infinity War, il y a un total de huit personnages impliqués (Thanos, Tony Stark,
+          Stephen Strange, Peter Parker, Peter Quill, Mantis, Drax et Nebula). Dans la bataille ayant eu lieu sur terre plus tard dans le 
+          film, le nombre de personnages est beaucoup plus grand. Ainsi, en considérant qu’un grand nombre de personnages peuvent
+          participer à un même événement, la création d’une table réservée aux personnages impliqués dans les événements devient
+          nécessaire pour Lore Weaver.
+        </p>
+
+        <p>
+          Cette réflexion m'a montré qu'il ne suffit pas de choisir une structure techniquement possible : il faut aussi déterminer si
+          elle correspond aux fonctionnalités souhaitées. Mon schéma reflète donc ma compréhension du domaine, mais aussi les choix que
+          j'ai faits concernant les informations que je souhaite pouvoir représenter.
+        </p>
+  
+        <h3>Utilisation de l'intelligence artificielle</h3>
+  
+        <p>
+          J'ai utilisé ChatGPT pour m'accompagner dans l’installation et l’intégration de PostgreSQL, un outil que je n'avais jamais 
+          utilisé auparavant. Mon objectif était de comprendre comment installer, configurer et intégrer ce système de gestion de base de
+          données à mon application Node.js et Express. 
+        </p>
+  
+        <p>
+          Au début de notre échange, j'ai expliqué à ChatGPT le contexte de mon projet, les technologies utilisées et mon environnement
+          de développement sur Mac. Ma première question était assez générale, puisque je ne savais pas encore quelles étapes étaient
+          nécessaires pour utiliser PostgreSQL dans une application web.
+        </p>
+  
+        <p>
+          Au fur et à mesure de mes démarches, mes questions sont devenues plus précises. Je souhaitais notamment comprendre si le
+          terminal de VS Code pouvait être utilisé pour les commandes en lien avec ma base de données. Suite à cette question, j’ai
+          compris par expérimentation que je pouvais ouvrir un terminal pour ma base de données directement sur l’application Postgres. 
+        </p>
+  
+        <p>
+          J'ai ensuite rencontré un obstacle concret après avoir installé Postgres.app. Lorsque j'essayais d'exécuter psql --version
+          dans le terminal de VS Code, j'obtenais le message <i>zsh: command not found: psql</i>. J'ai donc utilisé ChatGPT pour
+          comprendre pourquoi cette commande n'était pas reconnue et comment accéder à l'outil psql sur macOS.
+        </p>
+
+        <p>
+          Cette expérience m'a fait réaliser qu'installer un logiciel ne signifie pas nécessairement que ses commandes sont immédiatement
+          accessibles dans le terminal. Elle m'a également permis de mieux comprendre la distinction entre les différents outils 
+          nécessaires à l'utilisation de PostgreSQL. <i>PostgreSQL</i> est le système qui gère et stocke les données, tandis que <i>
+          Postgres.app</i> permet de l'installer et de l'exécuter localement sur macOS. L'outil <i>psql</i> permet d'interagir directement
+          avec la base de données depuis le terminal, alors que la bibliothèque JavaScript <i>pg</i> permet à mon application Node.js et
+          Express d'exécuter des requêtes SQL. Comprendre ces différences m'a notamment aidée à résoudre les difficultés rencontrées lors
+          de l'installation et de la configuration de mon environnement de développement.
+        </p>
+
+        <p>
+          Avec cette première expérience, j'ai commencé à comprendre l'importance de fournir un contexte précis lorsque j'interroge 
+          l'IA. Le fait de mentionner mon système d'exploitation, les technologies utilisées et le message d'erreur exact permettait
+          d'orienter les réponses vers le problème que je rencontrais réellement.
+        </p>
+
+        <p>
+          J'ai aussi constaté que les explications de ChatGPT ne remplaçaient pas l'expérimentation. Je devais exécuter les commandes,
+          observer les résultats et vérifier si les solutions correspondaient à mon environnement. L'IA constituait donc un outil
+          d'accompagnement, mais je restais responsable de comprendre et de tester les manipulations proposées.
+        </p>
+
+        <p>
+          Je n'ai pas utilisé ChatGPT pour élaborer directement mon schéma relationnel. J'ai conçu la structure de mes tables en fonction
+          des besoins de Lore Weaver. Mon utilisation de l'IA, dans cette transcription, portait plutôt sur l'apprentissage technique
+          nécessaire pour intégrer PostgreSQL au reste de mon application.
+        </p>
+
+        <p>
+          Transcription de mes échanges avec ChatGPT : <a href="https://chatgpt.com/share/6aef7cd4-757c-83ea-bb5b-7c26ce116758">
+            Découverte et installation de PostgreSQL</a>
+        </p>
+  
+        <h3>Difficultés techniques rencontrées</h3>
+  
+        <p>
+          Pendant et suite à l’installation de PostgreSQL, j'ai effectué plusieurs modifications à mon projet sans vérifier les tests au
+          fur et à mesure. Lorsque je les ai finalement consultés, plusieurs messages d'erreur s'étaient accumulés, ce qui rendait leur
+          origine plus difficile à identifier.
+        </p>
+  
+        <p>
+          Certains problèmes provenaient du déplacement de fichiers dans le dossier src. Comme leur emplacement avait changé, plusieurs
+          chemins d'importation ne correspondaient plus à la nouvelle structure du projet. J'avais également oublié d'ajouter la
+          bibliothèque pg aux dépendances de <i>package.json</i> sur GitHub comme cela avait été fait sur VS Code.
+        </p>
+
+        <p>
+          J’ai corrigé ces erreurs une à une en revoyant les chemins d'importation, en installant les dépendances nécessaires et en
+          relançant les tests. Cette expérience m'a appris qu'il est préférable de vérifier le fonctionnement du projet après chaque
+          modification importante plutôt que d'attendre que plusieurs changements soient terminés. En effet, il devient plus difficile de
+          comprendre quelle modification a causé un problème lorsque beaucoup de modifications ont été effectuées.
+        </p>
+
+        <p>
+          J'ai aussi rencontré un problème avec GitHub lorsque j'ai tenté d'envoyer mes modifications sur GitHub. Comme j'avais travaillé
+          à la fois dans VS Code et directement sur GitHub, les deux versions de mon dépôt n'étaient plus synchronisées. J'ai dû récupérer
+          et intégrer les changements distants avec <i>git pull origin main</i>, puis reprendre certaines modifications.
+        </p>
+
+        <p>
+          Cela m'a fait comprendre l'importance de maintenir mes versions locale et distante synchronisées, particulièrement avant de
+          commencer une nouvelle série de changements. Les difficultés techniques m’ont fait réalisé que j’ai tendance à avoir une vision
+          tunnel sur les objectifs que je me fixe et que cela me mène parfois à oublier des étapes de développement comme m’assurer d’avoir
+          push/pull sur VS Code avant de changer d’outil ou encore vérifier le résultat de ma pipeline CI pour m’assurer que les ajouts
+          n’ont pas causé d’erreurs.
+        </p>
+
+        <h3>Ajouts aux tests automatisés</h3>
+
+        <p>
+          Lors de l'intégration de PostgreSQL à Lore Weaver, j'ai d'abord ajouté une requête <i>SELECT NOW()</i> directement dans <i>
+          app.js</i> pour vérifier que mon application pouvait communiquer avec la base de données. Cette vérification s'exécutait
+          automatiquement au chargement de l'application et permettait de confirmer que PostgreSQL était accessible.
+        </p>
+
+        <p>
+          J'ai ensuite créé un fichier <i>database.test.js</i> contenant un test automatisé qui utilise une requête <i>SELECT 1</i> pour
+          vérifier la connexion à PostgreSQL. J'ai également modifié <i>app.test.js</i>, qui contenait déjà deux tests vérifiant la
+          route <i>/api/health</i> et l'accessibilité de la page d'accueil. Leur code a été réorganisé à travers l’ajout de la fonction
+          <i>withTestServer</i> pour éviter de répéter les instructions nécessaires au démarrage et à la fermeture d'un serveur 
+          temporaire. Ainsi, à mesure que des tests sont ajoutés, il suffira de faire appel à la fonction au lieu de répéter les mêmes 
+          lignes de code et d'alourdir inutilement le fichier.
+        </p>
+
+        <p>
+          J'ai choisi de rendre le test PostgreSQL conditionnel à l'aide de la variable d'environnement <i>TEST_DATABASE</i>. Ma pipeline
+          GitHub Actions ne dispose pas d'une base PostgreSQL configurée, car j’ai choisi de garder mon fichier <i>.env</i> sur mon propre
+          ordinateur afin d’éviter de partager le mode de passe de ma base de données. Cette approche permet de conserver les autres
+          tests automatisés sans provoquer d'échec lié à l'absence de la base de données. Je peux néanmoins activer le test manuellement
+          lorsque je souhaite vérifier la connexion.
+        </p>
+
+        <p>
+          J'ai aussi distingué deux objectifs : vérifier PostgreSQL au démarrage de l'application et effectuer un test automatisé. La
+          première vérification permet de détecter un problème de connexion lorsque Lore Weaver démarre, tandis que la seconde permet de
+          vérifier le fonctionnement de cette connexion pendant les tests. Pour éviter que la vérification au démarrage soit exécutée lors
+          des tests Express, j'ai choisi de la déplacer de <i>app.js</i> vers <i>server.js</i>.
+        </p>
+
+        <p>
+          Initialement, le fichier <i>server.js</i> servait uniquement à démarrer l'application sur le port défini. J'y ai ajouté une
+          vérification de la connexion à PostgreSQL avant le démarrage du serveur, afin de m'assurer que la base de données est
+          accessible. Pour cela, j'ai utilisé une fonction asynchrone <i>startServer()</i> contenant un bloc <i>try...catch</i>. Le bloc 
+          try tente d'exécuter une requête <i>SELECT 1</i> et, si elle réussit, démarre le serveur Express avec <i>app.listen()</i>. Si
+          une erreur survient, le bloc catch affiche un message d'erreur, ferme le pool de connexions PostgreSQL et indique que le
+          programme s'est terminé avec une erreur. Cette modification permet d'éviter que l'application démarre normalement lorsque sa
+          base de données est inaccessible. Elle permet également de mieux séparer les responsabilités : <i>app.js</i> configure 
+          l'application et ses routes, tandis que <i>server.js</i> gère son démarrage et la vérification de ses dépendances.
+        </p>
+
+        <h3>Prochaines étapes</h3>
+
+        <p>
+          Maintenant que PostgreSQL est intégré à mon projet et que j'ai terminé cette étape de travail sur les tests automatisés, je
+          souhaite développer l'inscription des utilisateurs, puis leur connexion à Lore Weaver.
+        </p>
+
+        <p>
+          Ces fonctionnalités permettront ensuite d'associer les univers aux comptes de leurs propriétaires et de commencer à utiliser
+          la base de données pour les fonctionnalités principales de l'application.
+        </p>
+
+        <p>
+          Je souhaite également tenter un déploiement du serveur de manière publique à travers un outil tel que Render. Des recherches
+          additionnelles seront nécessaire parce que je constate que plusieurs outils tels que celui-ci offrent des services gratuits,
+          mais limités qui pourraient ne pas correspondre à mes besoins.
+        </p>
+
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>Lore Weaver - Blogue de développement</p>
+  </footer>
+
+</body>
+</html>
